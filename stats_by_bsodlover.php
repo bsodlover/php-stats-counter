@@ -79,11 +79,7 @@ if ($conn->query($sql) !== TRUE)  {
 
 $sql = "SELECT MAX(bigip) FROM bigip";
 
-if (mysqli_query($conn, $sql)) {
-    // echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-}
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
