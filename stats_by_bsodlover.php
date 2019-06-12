@@ -21,18 +21,14 @@ $result = $conn->query($sql);
 if ($result->num_rows > 0) {
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        echo "Visitantes únicos:" . $row["MAX(id)"]. " -  " . $row["firstname"]. " " . $row["lastname"]. "<br>";
+        echo "Visitantes Ãºnicos:" . $row["MAX(id)"]. " -  " . $row["firstname"]. " " . $row["lastname"]. "<br>";
     }
 } else {
     echo "0 results";
 }
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $dbname);
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-} 
+
+
 //Test if it is a shared client
 if (!empty($_SERVER['HTTP_CLIENT_IP'])){
   $ip=$_SERVER['HTTP_CLIENT_IP'];
@@ -51,18 +47,9 @@ if ($result->num_rows > 0) {
        // echo "id: " . $row["id"]. " - Name: " . $row["firstname"]. " " . $row["lastname"]. "<br>";
     }
 } else {
-   // echo "0 results";
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-//echo "Connected successfully";
 $ipaddress = $_SERVER['REMOTE_ADDR'];
 $ipaddress = ip2long($ipaddress);
-//echo "your ip $ipaddress";
 //Test if it is a shared client
 if (!empty($_SERVER['HTTP_CLIENT_IP'])){
   $ip=$_SERVER['HTTP_CLIENT_IP'];
@@ -82,29 +69,13 @@ if ($conn->query($sql) === TRUE) {
 }
 // BIGip
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
-
 $sql = "INSERT INTO bigip (date)
 VALUES (now())";
 
-if (mysqli_query($conn, $sql)) {
-    // echo "New record created successfully";
-} else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+if ($conn->query($sql) !== TRUE)  {
+    echo "Error: " . $sql . "<br>" . $conn->error;
 }
-mysqli_close($conn);
 
-// Create connection
-$conn = mysqli_connect($servername, $username, $password, $dbname);
-// Check connection
-if (!$conn) {
-    die("Connection failed: " . mysqli_connect_error());
-}
 
 $sql = "SELECT MAX(bigip) FROM bigip";
 
